@@ -1,6 +1,8 @@
 {
     "name": "jimmijtoo/cart",
     "description": "A simple Laravel Cart.",
+    "keywords": ["Laravel", "Cart", "Shopping", "E-commerce"],
+    "license": "MIT",
     "require": {
         "php": "^8.0",
         "illuminate/database": "^8.0"
@@ -9,7 +11,6 @@
         "phpunit/phpunit": "~9.0",
         "orchestra/testbench": "~5|~6"
     },
-    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Jimmijtoo\\Cart\\": "src/"
