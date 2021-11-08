@@ -1,5 +1,5 @@
 {
-    "name": "jimmijtoo/cart",
+    "name": "jimmitjoo/cart",
     "description": "A simple Laravel Cart.",
     "keywords": ["Laravel", "Cart", "Shopping", "E-commerce"],
     "license": "MIT",
@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Jimmijtoo\\Cart\\": "src/"
+            "Jimmitjoo\\Cart\\": "src"
         }
     },
     "authors": [
