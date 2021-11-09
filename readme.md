@@ -6,7 +6,7 @@
 
 #### Publish the config and migrations.
 
-`php artisan vendor:publish --tag=cart`
+`php artisan vendor:publish --tag=laravel-cart`
 
 
 ## Create a new Cart

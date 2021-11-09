@@ -14,8 +14,13 @@ class CartServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->offerPublishing();
+        if ($this->app->runningInConsole()) {
+            $this->offerPublishing();
+        }
+
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }
+
     /**
      * Register any package services.
      *
@@ -24,7 +29,7 @@ class CartServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/cart.php',
+            __DIR__ . '/../config/cart.php',
             'cart'
         );
 
@@ -47,9 +52,9 @@ class CartServiceProvider extends ServiceProvider
     public function offerPublishing(): void
     {
         $this->publishes([
-            __DIR__.'/../config/cart.php' => $this->app->configPath() . '/cart.php',
-            __DIR__.'/../database/migrations/create_cart_tables.php' => $this->getMigrationFileName('create_cart_tables.php'),
-        ], 'cart');
+            __DIR__ . '/../config/cart.php' => $this->app->configPath() . '/cart.php',
+            __DIR__ . '/../database/migrations/2021_11_09_111109_create_cart_tables.php' => $this->getMigrationFileName('create_cart_tables.php'),
+        ], 'laravel-cart');
     }
 
     /**
@@ -65,11 +70,11 @@ class CartServiceProvider extends ServiceProvider
 
         $filesystem = $this->app->make(Filesystem::class);
 
-        return Collection::make($this->app->databasePath().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR)
+        return Collection::make($this->app->databasePath() . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR)
             ->flatMap(function ($path) use ($filesystem, $migrationFileName) {
-                return $filesystem->glob($path.'*_'.$migrationFileName);
+                return $filesystem->glob($path . '*_' . $migrationFileName);
             })
-            ->push($this->app->databasePath()."/migrations/{$timestamp}_{$migrationFileName}")
+            ->push($this->app->databasePath() . "/migrations/{$timestamp}_{$migrationFileName}")
             ->first();
     }
 }
