@@ -4,15 +4,17 @@
 namespace Jimmitjoo\Cart\Actions;
 
 
-use Jimmitjoo\Cart\Models\Cart;
+use Illuminate\Support\Str;
+use Jimmitjoo\Cart\Events\CartItemAdded;
 use Jimmitjoo\Cart\Models\CartItem;
-use Jimmitjoo\DataTransferObjects\CartItemData;
+use Jimmitjoo\Cart\DataTransferObjects\CartItemData;
 
 class AddCartItemToCartAction
 {
     public function execute(CartItemData $cartItemData): CartItem
     {
         return CartItem::create([
+            'id' => Str::uuid()->toString(),
             'cart_uuid' => $cartItemData->cartUuid,
             'amount' => $cartItemData->amount,
             'title' => $cartItemData->title,
@@ -20,8 +22,6 @@ class AddCartItemToCartAction
             'purchasable_type' => $cartItemData->purchasableType,
             'price' => $cartItemData->price,
             'discount' => $cartItemData->discount,
-            'price_before_discount' => $cartItemData->priceBeforeDiscount,
         ]);
-
     }
 }

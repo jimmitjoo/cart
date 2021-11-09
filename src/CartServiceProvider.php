@@ -3,9 +3,18 @@
 
 namespace Jimmitjoo\Cart;
 
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
+use Jimmitjoo\Cart\Models\CartItem;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
+use Jimmitjoo\Cart\Events\CartItemAdded;
+use Jimmitjoo\Cart\Events\CartItemDeleted;
+use Jimmitjoo\Cart\Events\CartItemUpdated;
+use Jimmitjoo\Cart\Observers\CartObserver;
+use Jimmitjoo\Cart\Observers\CartItemObserver;
+use Jimmitjoo\Cart\Models\Cart as LaravelCart;
+use Jimmitjoo\Cart\Listeners\CalculateCartPrice;
 
 class CartServiceProvider extends ServiceProvider
 {
@@ -19,6 +28,24 @@ class CartServiceProvider extends ServiceProvider
         }
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+
+        LaravelCart::observe(CartObserver::class);
+        CartItem::observe(CartItemObserver::class);
+
+        Event::listen(
+            CartItemAdded::class,
+            CalculateCartPrice::class
+        );
+
+        Event::listen(
+            CartItemUpdated::class,
+            CalculateCartPrice::class
+        );
+
+        Event::listen(
+            CartItemDeleted::class,
+            CalculateCartPrice::class
+        );
     }
 
     /**

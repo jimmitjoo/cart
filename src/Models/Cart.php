@@ -46,8 +46,14 @@ class Cart extends Model
         'total_price_before_discount',
     ];
 
+    protected $casts = [
+        'total_price' => 'integer',
+        'total_discount' => 'integer',
+        'total_price_before_discount' => 'integer',
+    ];
+
     public function cartItems(): HasMany
     {
-        return $this->hasMany(CartItem::class);
+        return $this->hasMany(CartItem::class, 'cart_uuid');
     }
 }

@@ -66,8 +66,8 @@ class CartTest extends TestCase
 
         $this->assertModelExists($cart)
             ->assertDatabaseHas('carts', [
-                'user_id' => 1,
-                'note' => 'Created by test',
+                'user_id' => $cartData->userId,
+                'note' => $cartData->note,
             ]);
     }
 }

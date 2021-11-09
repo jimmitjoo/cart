@@ -3,7 +3,6 @@
 
 namespace Jimmitjoo\Cart\Models;
 
-use Jimmitjoo\Cart\Events\CartItemAdded;
 use Jimmitjoo\Cart\Traits\UsesUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,18 +13,22 @@ class CartItem extends Model
 {
     use UsesUuids, SoftDeletes;
 
-    public static function boot()
-    {
-        parent::boot();
+    protected $fillable = [
+        'id',
+        'cart_uuid',
+        'amount',
+        'price',
+        'discount',
+        'title',
+        'purchasable_id',
+        'purchasable_type',
+    ];
 
-        static::created(function($model) {
-            if (is_null($model->cart_uuid)) {
-                return;
-            }
-
-            CartItemAdded::dispatch($model->cart_uuid);
-        });
-    }
+    protected $casts = [
+        'amount' => 'integer',
+        'price' => 'integer',
+        'discount' => 'integer',
+    ];
 
     public function cart(): BelongsTo
     {
