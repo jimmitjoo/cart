@@ -12,6 +12,8 @@
 
 For example, you can create a new Cart for a user that for some reason doesn't already got a cart.
 
+To use a new cart you should store the ID, which is a uuid string, of the cart somewhere. `$cart->id`
+
 ```php
 $cart = (new CreateCartAction)->execute();
 ```
@@ -22,6 +24,7 @@ For example you can create a Cart belonging to a specific User of your system.
 
 ```php
 $cartData = new CartData((int) $userId);
+
 $cart = (new CreateCartAction)->execute($cartData);
 ```
 
@@ -30,11 +33,27 @@ expected by the CartData object.
 
 ```php
 $cartData = new CartData((int) $userId, (int) $status, (string) $note);
+
 $cart = (new CreateCartAction)->execute($cartData);
 ```
 
-## Add item to Cart
+## Add a product to your Cart
 
+So there are a number of ways to do this.
+
+`Purchasable` is a trait you can add to any model you want your users to be able to purchase.
+```php 
+$cart->addToCart(Purchasable $purchasable, int $amount = 1, int $discount = 0);
+```
+
+You can chain multiple product additions.
+```php 
+$cart
+->addToCart(Purchasable $purchasable)
+->addToCart(Purchasable $purchasable);
+```
+
+Or you can specifically create a CartItem by yourself by attaching the cart ID.
 ```php
 $cartItemData = new CartItemData(
     1, // Amount of products.
@@ -53,6 +72,7 @@ $cartItem = (new AddCartItemToCartAction)->execute($cartItemData);
 
 ```php
 $cartItem = CartItem::find($existingItemId);
+
 $cartItemData = new CartItemData(
     1, // Amount of products.
     88, // Current price (minus discount) of the product.

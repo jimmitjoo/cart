@@ -3,6 +3,9 @@
 
 namespace Jimmitjoo\Cart\Models;
 
+use Jimmitjoo\Cart\Actions\AddCartItemToCartAction;
+use Jimmitjoo\Cart\DataTransferObjects\CartItemData;
+use Jimmitjoo\Cart\Traits\Purchasable;
 use Jimmitjoo\Cart\Traits\UsesUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -55,5 +58,42 @@ class Cart extends Model
     public function cartItems(): HasMany
     {
         return $this->hasMany(CartItem::class, 'cart_uuid');
+    }
+
+    public function addToCart(Purchasable $purchasable, int $amount = 1, int $discount = 0): static
+    {
+        $cartItemData = new CartItemData(
+            $amount,
+            $purchasable->price - $discount,
+            $discount,
+            null,
+            $purchasable->id,
+            get_class($purchasable),
+            $this->id,
+        );
+
+        (new AddCartItemToCartAction)->execute($cartItemData);
+
+        return $this;
+    }
+
+    public function saveForLater() {
+        $this->status = self::SAVED;
+        $this->save();
+    }
+
+    public function cancel() {
+        $this->status = self::CANCELLED;
+        $this->save();
+    }
+
+    public function abandon() {
+        $this->status = self::ABANDONED;
+        $this->save();
+    }
+
+    public function order() {
+        $this->status = self::ORDERED;
+        $this->save();
     }
 }

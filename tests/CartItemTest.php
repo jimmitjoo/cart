@@ -4,10 +4,11 @@
 namespace Jimmitjoo\Cart\Tests;
 
 
+use Jimmitjoo\Cart\Models\Cart;
+use Jimmitjoo\Cart\Tests\Models\Product;
+use Jimmitjoo\Cart\Actions\CreateCartAction;
 use Jimmitjoo\Cart\Actions\RemoveCartItemAction;
 use Jimmitjoo\Cart\Actions\UpdateCartItemAction;
-use Jimmitjoo\Cart\Models\Cart;
-use Jimmitjoo\Cart\Actions\CreateCartAction;
 use Jimmitjoo\Cart\Actions\AddCartItemToCartAction;
 use Jimmitjoo\Cart\DataTransferObjects\CartItemData;
 
@@ -39,6 +40,16 @@ class CartItemTest extends TestCase
         $cartItem = (new AddCartItemToCartAction)->execute($cartItemData);
 
         $this->assertModelExists($cartItem);
+
+        $this->assertEquals(1, $this->cart->cartItems->count());
+
+        $this->cart
+            ->addToCart($this->createProduct())
+            ->addToCart($this->createProduct(), 2);
+
+        $this->cart = Cart::find($this->cart->id);
+
+        $this->assertEquals(3, $this->cart->cartItems->count());
     }
 
     /**
@@ -96,5 +107,13 @@ class CartItemTest extends TestCase
             $this->cart->id,
         );
         return (new AddCartItemToCartAction)->execute($cartItemData);
+    }
+
+    private function createProduct()
+    {
+        return Product::create([
+            'name' => 'Product name',
+            'price' => rand(1, 999),
+        ]);
     }
 }
