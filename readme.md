@@ -8,7 +8,6 @@
 
 `php artisan vendor:publish --tag=laravel-cart`
 
-
 ## Create a new Cart
 
 For example, you can create a new Cart for a user that for some reason doesn't already got a cart.
@@ -20,12 +19,15 @@ $cart = (new CreateCartAction)->execute();
 ### Create a new Cart with attributes
 
 For example you can create a Cart belonging to a specific User of your system.
+
 ```php
 $cartData = new CartData((int) $userId);
 $cart = (new CreateCartAction)->execute($cartData);
 ```
 
-You can add some other things to a cart as well. For example a status and a note. Typehints just to clarify what type is expected by the CartData object.
+You can add some other things to a cart as well. For example a status and a note. Typehints just to clarify what type is
+expected by the CartData object.
+
 ```php
 $cartData = new CartData((int) $userId, (int) $status, (string) $note);
 $cart = (new CreateCartAction)->execute($cartData);
@@ -36,12 +38,38 @@ $cart = (new CreateCartAction)->execute($cartData);
 ```php
 $cartItemData = new CartItemData(
     1, // Amount of products.
-    $cart->id, // ID of cart to add this item to.
-    $title, // It is possible to add a title for a row, but is nullable
-    $purchasableId, // A purchasable product ID
-    $purchasableType, // A purchasable product type
-    $price, // Current price of the product.
-    $discount, // Item discount,
+    300, // Current price (minus discount) of the product.
+    100, // The discount,
+    'Personalized product', // Custom product name
+    null, // You could add a purchasable id here
+    null, // And the purchasable type here
+    $this->cart->id, // Add this item to a cart
 );
+
 $cartItem = (new AddCartItemToCartAction)->execute($cartItemData);
+```
+
+## Update a cart item
+
+```php
+$cartItem = CartItem::find($existingItemId);
+$cartItemData = new CartItemData(
+    1, // Amount of products.
+    88, // Current price (minus discount) of the product.
+    12, // The discount,
+    'Updated product name', // Custom product name
+    null, // You could add a purchasable id here
+    null, // And the purchasable type here
+    null, // We don't need to specify the cart on update...
+    $cartItem->id, // ID of the item to update
+);
+
+$cartItem = (new UpdateCartItemAction)->execute($cartItemData);
+```
+
+## Remove a cart item
+```php
+$cartItemToRemove = CartItem::find($existingItemId);
+
+(new RemoveCartItemAction)->execute($cartItemToRemove);
 ```

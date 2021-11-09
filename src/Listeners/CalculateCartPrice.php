@@ -5,6 +5,8 @@ namespace Jimmitjoo\Cart\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Jimmitjoo\Cart\Events\CartItemAdded;
+use Jimmitjoo\Cart\Events\CartItemDeleted;
+use Jimmitjoo\Cart\Events\CartItemUpdated;
 use Jimmitjoo\Cart\Models\Cart;
 use Jimmitjoo\Cart\Models\CartItem;
 
@@ -16,7 +18,7 @@ class CalculateCartPrice
      * @param object $event
      * @return void
      */
-    public function handle(CartItemAdded $event)
+    public function handle(CartItemAdded|CartItemUpdated|CartItemDeleted $event)
     {
         $cartItems = CartItem::where('cart_uuid', $event->cartUuid)->get();
 
