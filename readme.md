@@ -17,6 +17,20 @@ For example, you can create a new Cart for a user that for some reason doesn't a
 $cart = (new CreateCartAction)->execute();
 ```
 
+### Create a new Cart with attributes
+
+For example you can create a Cart belonging to a specific User of your system.
+```php
+$cartData = new CartData((int) $userId);
+$cart = (new CreateCartAction)->execute($cartData);
+```
+
+You can add some other things to a cart as well. For example a status and a note. Typehints just to clarify what type is expected by the CartData object.
+```php
+$cartData = new CartData((int) $userId, (int) $status, (string) $note);
+$cart = (new CreateCartAction)->execute($cartData);
+```
+
 ## Add item to Cart
 
 ```php

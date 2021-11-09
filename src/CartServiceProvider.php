@@ -48,7 +48,7 @@ class CartServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/../config/cart.php' => $this->app->configPath() . '/cart.php',
-            __DIR__.'/../database/migrations/create_cart_tables.php.stub' => $this->getMigrationFileName('create_cart_tables.php'),
+            __DIR__.'/../database/migrations/create_cart_tables.php' => $this->getMigrationFileName('create_cart_tables.php'),
         ], 'cart');
     }
 

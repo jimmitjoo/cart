@@ -16,6 +16,11 @@
             "Jimmitjoo\\Cart\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Jimmitjoo\\Cart\\Tests\\": "tests"
+        }
+    },
     "authors": [
         {
             "name": "Jimmie Johansson",

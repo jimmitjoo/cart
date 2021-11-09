@@ -4,6 +4,7 @@
 namespace Jimmitjoo\Cart\Actions;
 
 
+use Jimmitjoo\Cart\Models\Cart;
 use Jimmitjoo\Cart\Models\CartItem;
 use Jimmitjoo\DataTransferObjects\CartItemData;
 
@@ -21,5 +22,6 @@ class AddCartItemToCartAction
             'discount' => $cartItemData->discount,
             'price_before_discount' => $cartItemData->priceBeforeDiscount,
         ]);
+
     }
 }
