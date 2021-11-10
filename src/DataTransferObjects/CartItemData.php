@@ -10,7 +10,7 @@ class CartItemData
         public ?int $price = null,
         public ?int $discount = null,
         public ?string $title = null,
-        public ?int $purchasableId = null,
+        public ?string $purchasableId = null,
         public ?string $purchasableType = null,
         public ?string $cartUuid,
         public ?string $id = null,

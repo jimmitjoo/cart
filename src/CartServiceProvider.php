@@ -18,6 +18,18 @@ use Jimmitjoo\Cart\Listeners\CalculateCartPrice;
 
 class CartServiceProvider extends ServiceProvider
 {
+    protected array $listen = [
+        CartItemAdded::class => [
+            CalculateCartPrice::class,
+        ],
+        CartItemUpdated::class => [
+            CalculateCartPrice::class,
+        ],
+        CartItemDeleted::class => [
+            CalculateCartPrice::class,
+        ],
+    ];
+
     /**
      * @return void
      */
@@ -31,21 +43,6 @@ class CartServiceProvider extends ServiceProvider
 
         LaravelCart::observe(CartObserver::class);
         CartItem::observe(CartItemObserver::class);
-
-        Event::listen(
-            CartItemAdded::class,
-            CalculateCartPrice::class
-        );
-
-        Event::listen(
-            CartItemUpdated::class,
-            CalculateCartPrice::class
-        );
-
-        Event::listen(
-            CartItemDeleted::class,
-            CalculateCartPrice::class
-        );
     }
 
     /**
@@ -80,7 +77,7 @@ class CartServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../config/cart.php' => $this->app->configPath() . '/cart.php',
-            __DIR__ . '/../database/migrations/2021_11_09_111109_create_carts_table.php.stub.stub' => $this->getMigrationFileName('create_carts_table.php'),
+            __DIR__ . '/../database/migrations/2021_11_09_111109_create_carts_table.php.stub' => $this->getMigrationFileName('create_carts_table.php'),
         ], 'laravel-cart');
     }
 
