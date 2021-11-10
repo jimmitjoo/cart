@@ -80,7 +80,7 @@ class CartServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../config/cart.php' => $this->app->configPath() . '/cart.php',
-            __DIR__ . '/../database/migrations/2021_11_09_111109_create_carts_table.php' => $this->getMigrationFileName('create_carts_table.php'),
+            __DIR__ . '/../database/migrations/2021_11_09_111109_create_carts_table.php.stub.stub' => $this->getMigrationFileName('create_carts_table.php'),
         ], 'laravel-cart');
     }
 

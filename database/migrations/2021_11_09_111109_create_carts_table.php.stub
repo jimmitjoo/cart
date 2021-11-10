@@ -34,7 +34,7 @@ class CreateCartsTable extends Migration
             $table->integer('amount')->default(1);
 
             $table->string('title')->nullable();
-            $table->integer('purchasable_id')->nullable();
+            $table->string('purchasable_id')->nullable();
             $table->string('purchasable_type')->nullable();
 
             $table->integer('price')->default(0);
