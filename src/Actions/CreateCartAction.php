@@ -14,15 +14,12 @@ class CreateCartAction
         $cartClass = config('cart.models.cart');
 
         if (is_null($cartData)) {
-            return $cartClass::create([
-                'id' => Str::uuid()->toString(),
-            ]);
+            return $cartClass::create();
         }
 
         return $cartClass::create([
-            'id' => Str::uuid()->toString(),
-            'user_id' => $cartData->userId,
             'note' => $cartData->note,
+            'user_id' => $cartData->userId,
         ]);
     }
 }

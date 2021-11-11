@@ -15,7 +15,6 @@ class AddCartItemToCartAction
         $cartItemClass = config('cart.models.cart-item');
 
         return $cartItemClass::create([
-            'id' => Str::uuid()->toString(),
             'cart_uuid' => $cartItemData->cartUuid,
             'amount' => $cartItemData->amount,
             'title' => $cartItemData->title,

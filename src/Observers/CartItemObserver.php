@@ -2,6 +2,7 @@
 
 namespace Jimmitjoo\Cart\Observers;
 
+use Illuminate\Support\Str;
 use Jimmitjoo\Cart\Events\CartItemAdded;
 use Jimmitjoo\Cart\Events\CartItemDeleted;
 use Jimmitjoo\Cart\Events\CartItemUpdated;
@@ -17,7 +18,9 @@ class CartItemObserver
      */
     public function creating(CartItemContract $cartItem)
     {
-        //
+        if (empty($cart->{$cartItem->getKeyName()})) {
+            $cartItem->{$cartItem->getKeyName()} = Str::uuid()->toString();
+        }
     }
 
     /**

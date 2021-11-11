@@ -8,6 +8,8 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Jimmitjoo\Cart\Contracts\CartContract;
 use Jimmitjoo\Cart\Contracts\CartItemContract;
+use Jimmitjoo\Cart\Observers\CartItemObserver;
+use Jimmitjoo\Cart\Observers\CartObserver;
 
 class CartServiceProvider extends ServiceProvider
 {
@@ -24,8 +26,11 @@ class CartServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        //LaravelCart::observe(CartObserver::class);
-        //CartItem::observe(CartItemObserver::class);
+        $cartClass = config('cart.models.cart');
+        $cartItemClass = config('cart.models.cart-item');
+
+        $cartClass::observe(CartObserver::class);
+        $cartItemClass::observe(CartItemObserver::class);
     }
 
     /**
