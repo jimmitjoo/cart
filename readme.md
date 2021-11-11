@@ -1,5 +1,7 @@
 # A Shopping Cart for Laravel 8
 
+[![Build Status](https://app.travis-ci.com/jimmitjoo/cart.svg?branch=main)](https://app.travis-ci.com/jimmitjoo/cart)
+
 We require PHP 8.
 
 #### Install the package.
