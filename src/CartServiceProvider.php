@@ -26,8 +26,8 @@ class CartServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        $cartClass = config('cart.models.cart');
-        $cartItemClass = config('cart.models.cart-item');
+        $cartClass = config('cart.Models.cart');
+        $cartItemClass = config('cart.Models.cart-item');
 
         $cartClass::observe(CartObserver::class);
         $cartItemClass::observe(CartItemObserver::class);
@@ -68,7 +68,7 @@ class CartServiceProvider extends ServiceProvider
 
     protected function registerModelBindings()
     {
-        $config = $this->app->config['cart.models'];
+        $config = $this->app->config['cart.Models'];
 
         if (! $config) {
             return;

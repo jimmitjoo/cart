@@ -33,7 +33,7 @@ class CartItem extends Model implements CartItemContract
 
     public function cart(): BelongsTo
     {
-        return $this->belongsTo(config('cart.models.cart'));
+        return $this->belongsTo(config('cart.Models.cart'));
     }
 
     /**

@@ -11,7 +11,7 @@ class CreateCartAction
 {
     public function execute(?CartData $cartData = null): CartContract
     {
-        $cartClass = config('cart.models.cart');
+        $cartClass = config('cart.Models.cart');
 
         if (is_null($cartData)) {
             return $cartClass::create();

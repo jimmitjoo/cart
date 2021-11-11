@@ -11,7 +11,7 @@ class UpdateCartItemAction
 {
     public function execute(CartItemData $cartItemData): CartItemContract
     {
-        $cartItemClass = config('cart.models.cart-item');
+        $cartItemClass = config('cart.Models.cart-item');
 
         $cartItem = $cartItemClass::find($cartItemData->id);
         $cartItem->amount = ($cartItemData->amount) ?: $cartItem->amount;
