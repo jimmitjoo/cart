@@ -14,6 +14,8 @@ class CartTest extends TestCase
     {
         $cart = (new CreateCartAction)->execute();
 
+        $this->assertNotEquals(0, $cart->id);
+        $this->assertNotEquals(null, $cart->id);
         $this->assertModelExists($cart);
     }
 

@@ -1,4 +1,6 @@
-# Laravel Cart
+# A Shopping Cart for Laravel 8
+
+We require PHP 8.
 
 #### Install the package.
 
@@ -12,12 +14,20 @@
 
 To make this work you need to implement contracts for both models.
 
+By default we expect both the Cart and CartItem model to use Uuids as identifiers.
+
 ```php
-class Cart extends Model implements CartContract
+class Cart extends Model implements CartContract 
+{
+    use UsesUuids;
+}
 ```
 
 ```php
-class CartItem extends Model implements CartItemContract
+class CartItem extends Model implements CartItemContract 
+{
+    use UsesUuids;
+}
 ```
 
 
