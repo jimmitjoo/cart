@@ -3,18 +3,17 @@
 namespace Jimmitjoo\Cart\Observers;
 
 use Illuminate\Support\Str;
-use Jimmitjoo\Cart\Models\Cart;
-use Jimmitjoo\Cart\Events\CartItemAdded;
+use Jimmitjoo\Cart\Contracts\CartContract;
 
 class CartObserver
 {
     /**
      * Handle the CartItem "created" event.
      *
-     * @param Cart $cart
+     * @param CartContract $cart
      * @return void
      */
-    public function creating(Cart $cart)
+    public function creating(CartContract $cart)
     {
         if (empty($cart->{$cart->getKeyName()})) {
             $cart->{$cart->getKeyName()} = Str::uuid()->toString();
@@ -24,10 +23,10 @@ class CartObserver
     /**
      * Handle the CartItem "created" event.
      *
-     * @param Cart $cart
+     * @param CartContract $cart
      * @return void
      */
-    public function created(Cart $cart)
+    public function created(CartContract $cart)
     {
         //
     }
@@ -35,10 +34,10 @@ class CartObserver
     /**
      * Handle the CartItem "updated" event.
      *
-     * @param Cart $cart
+     * @param CartContract $cart
      * @return void
      */
-    public function updated(Cart $cart)
+    public function updated(CartContract $cart)
     {
         //
     }
@@ -46,10 +45,10 @@ class CartObserver
     /**
      * Handle the CartItem "deleted" event.
      *
-     * @param Cart $cart
+     * @param CartContract $cart
      * @return void
      */
-    public function deleted(Cart $cart)
+    public function deleted(CartContract $cart)
     {
         //
     }
@@ -57,10 +56,10 @@ class CartObserver
     /**
      * Handle the CartItem "forceDeleted" event.
      *
-     * @param Cart $cart
+     * @param CartContract $cart
      * @return void
      */
-    public function forceDeleted(Cart $cart)
+    public function forceDeleted(CartContract $cart)
     {
         //
     }

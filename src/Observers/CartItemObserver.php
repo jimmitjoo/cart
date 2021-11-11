@@ -2,20 +2,20 @@
 
 namespace Jimmitjoo\Cart\Observers;
 
-use Jimmitjoo\Cart\Events\CartItemDeleted;
-use Jimmitjoo\Cart\Models\CartItem;
 use Jimmitjoo\Cart\Events\CartItemAdded;
+use Jimmitjoo\Cart\Events\CartItemDeleted;
 use Jimmitjoo\Cart\Events\CartItemUpdated;
+use Jimmitjoo\Cart\Contracts\CartItemContract;
 
 class CartItemObserver
 {
     /**
      * Handle the CartItem "created" event.
      *
-     * @param CartItem $cartItem
+     * @param CartItemContract $cartItem
      * @return void
      */
-    public function creating(CartItem $cartItem)
+    public function creating(CartItemContract $cartItem)
     {
         //
     }
@@ -23,10 +23,10 @@ class CartItemObserver
     /**
      * Handle the CartItem "created" event.
      *
-     * @param CartItem $cartItem
+     * @param CartItemContract $cartItem
      * @return void
      */
-    public function created(CartItem $cartItem)
+    public function created(CartItemContract $cartItem)
     {
         CartItemAdded::dispatch($cartItem->cart_uuid);
     }
@@ -34,10 +34,10 @@ class CartItemObserver
     /**
      * Handle the CartItem "updated" event.
      *
-     * @param CartItem $cartItem
+     * @param CartItemContract $cartItem
      * @return void
      */
-    public function updated(CartItem $cartItem)
+    public function updated(CartItemContract $cartItem)
     {
         CartItemUpdated::dispatch($cartItem->cart_uuid);
     }
@@ -45,10 +45,10 @@ class CartItemObserver
     /**
      * Handle the CartItem "deleted" event.
      *
-     * @param CartItem $cartItem
+     * @param CartItemContract $cartItem
      * @return void
      */
-    public function deleted(CartItem $cartItem)
+    public function deleted(CartItemContract $cartItem)
     {
         CartItemDeleted::dispatch($cartItem->cart_uuid);
     }

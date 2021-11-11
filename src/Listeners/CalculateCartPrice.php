@@ -2,13 +2,9 @@
 
 namespace Jimmitjoo\Cart\Listeners;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Jimmitjoo\Cart\Events\CartItemAdded;
 use Jimmitjoo\Cart\Events\CartItemDeleted;
 use Jimmitjoo\Cart\Events\CartItemUpdated;
-use Jimmitjoo\Cart\Models\Cart;
-use Jimmitjoo\Cart\Models\CartItem;
 
 class CalculateCartPrice
 {
@@ -20,7 +16,10 @@ class CalculateCartPrice
      */
     public function handle(CartItemAdded|CartItemUpdated|CartItemDeleted $event)
     {
-        $cartItems = CartItem::where('cart_uuid', $event->cartUuid)->get();
+        $cartClass = config('cart.models.cart');
+        $cartItemClass = config('cart.models.cart-item');
+
+        $cartItems = $cartItemClass::where('cart_uuid', $event->cartUuid)->get();
 
         $price = 0;
         $discount = 0;
@@ -30,7 +29,7 @@ class CalculateCartPrice
             $discount += $item->discount;
         }
 
-        $cart = Cart::find($event->cartUuid);
+        $cart = $cartClass::find($event->cartUuid);
         $cart->total_price = $price;
         $cart->total_discount = $discount;
         $cart->total_price_before_discount = $price + $discount;

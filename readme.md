@@ -8,6 +8,19 @@
 
 `php artisan vendor:publish --tag=laravel-cart`
 
+#### You may configure your own models for Cart and CartItem.
+
+To make this work you need to implement contracts for both models.
+
+```php
+class Cart extends Model implements CartContract
+```
+
+```php
+class CartItem extends Model implements CartItemContract
+```
+
+
 ## Create a new Cart
 
 For example, you can create a new Cart for a user that for some reason doesn't already got a cart.

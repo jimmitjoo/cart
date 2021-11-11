@@ -4,18 +4,10 @@
 namespace Jimmitjoo\Cart;
 
 use Illuminate\Support\Collection;
-use Jimmitjoo\Cart\Contracts\CartContract;
-use Jimmitjoo\Cart\Contracts\CartItemContract;
-use Jimmitjoo\Cart\Models\CartItem;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
-use Jimmitjoo\Cart\Events\CartItemAdded;
-use Jimmitjoo\Cart\Events\CartItemDeleted;
-use Jimmitjoo\Cart\Events\CartItemUpdated;
-use Jimmitjoo\Cart\Observers\CartObserver;
-use Jimmitjoo\Cart\Observers\CartItemObserver;
-use Jimmitjoo\Cart\Models\Cart as LaravelCart;
-use Jimmitjoo\Cart\Listeners\CalculateCartPrice;
+use Jimmitjoo\Cart\Contracts\CartContract;
+use Jimmitjoo\Cart\Contracts\CartItemContract;
 
 class CartServiceProvider extends ServiceProvider
 {
