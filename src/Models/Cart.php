@@ -33,6 +33,8 @@ class Cart extends Model implements CartContract
         'total_price_before_discount' => 'integer',
     ];
 
+    protected $with = ['cartItems'];
+
     public function cartItems(): HasMany
     {
         return $this->hasMany(config('cart.models.cart-item'), 'cart_uuid');
@@ -55,22 +57,26 @@ class Cart extends Model implements CartContract
         return $this;
     }
 
-    public function saveForLater(): void {
+    public function saveForLater(): void
+    {
         $this->status = self::SAVED;
         $this->save();
     }
 
-    public function cancel(): void {
+    public function cancel(): void
+    {
         $this->status = self::CANCELLED;
         $this->save();
     }
 
-    public function abandon(): void {
+    public function abandon(): void
+    {
         $this->status = self::ABANDONED;
         $this->save();
     }
 
-    public function order(): void {
+    public function order(): void
+    {
         $this->status = self::ORDERED;
         $this->save();
     }
