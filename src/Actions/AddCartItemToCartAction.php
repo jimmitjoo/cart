@@ -5,15 +5,16 @@ namespace Jimmitjoo\Cart\Actions;
 
 
 use Illuminate\Support\Str;
-use Jimmitjoo\Cart\Events\CartItemAdded;
-use Jimmitjoo\Cart\Models\CartItem;
+use Jimmitjoo\Cart\Contracts\CartItemContract;
 use Jimmitjoo\Cart\DataTransferObjects\CartItemData;
 
 class AddCartItemToCartAction
 {
-    public function execute(CartItemData $cartItemData): CartItem
+    public function execute(CartItemData $cartItemData): CartItemContract
     {
-        return CartItem::create([
+        $cartItemClass = config('cart.models.cart-item');
+
+        return $cartItemClass::create([
             'id' => Str::uuid()->toString(),
             'cart_uuid' => $cartItemData->cartUuid,
             'amount' => $cartItemData->amount,

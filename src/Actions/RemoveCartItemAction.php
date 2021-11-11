@@ -4,11 +4,11 @@
 namespace Jimmitjoo\Cart\Actions;
 
 
-use Jimmitjoo\Cart\Models\CartItem;
+use Jimmitjoo\Cart\Contracts\CartItemContract;
 
 class RemoveCartItemAction
 {
-    public function execute(CartItem $cartItem)
+    public function execute(CartItemContract $cartItem)
     {
         return $cartItem->delete();
     }

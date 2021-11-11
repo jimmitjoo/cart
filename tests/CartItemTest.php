@@ -6,6 +6,7 @@ namespace Jimmitjoo\Cart\Tests;
 
 use Jimmitjoo\Cart\Models\Cart;
 use Jimmitjoo\Cart\Tests\Models\Product;
+use Jimmitjoo\Cart\Contracts\CartContract;
 use Jimmitjoo\Cart\Actions\CreateCartAction;
 use Jimmitjoo\Cart\Actions\RemoveCartItemAction;
 use Jimmitjoo\Cart\Actions\UpdateCartItemAction;
@@ -14,7 +15,7 @@ use Jimmitjoo\Cart\DataTransferObjects\CartItemData;
 
 class CartItemTest extends TestCase
 {
-    private Cart $cart;
+    private CartContract $cart;
 
     public function setUp(): void
     {

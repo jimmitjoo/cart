@@ -4,8 +4,9 @@
 namespace Jimmitjoo\Cart;
 
 use Illuminate\Support\Collection;
+use Jimmitjoo\Cart\Contracts\CartContract;
+use Jimmitjoo\Cart\Contracts\CartItemContract;
 use Jimmitjoo\Cart\Models\CartItem;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Jimmitjoo\Cart\Events\CartItemAdded;
@@ -18,18 +19,6 @@ use Jimmitjoo\Cart\Listeners\CalculateCartPrice;
 
 class CartServiceProvider extends ServiceProvider
 {
-    protected array $listen = [
-        CartItemAdded::class => [
-            CalculateCartPrice::class,
-        ],
-        CartItemUpdated::class => [
-            CalculateCartPrice::class,
-        ],
-        CartItemDeleted::class => [
-            CalculateCartPrice::class,
-        ],
-    ];
-
     /**
      * @return void
      */
@@ -39,10 +28,12 @@ class CartServiceProvider extends ServiceProvider
             $this->offerPublishing();
         }
 
+        $this->registerModelBindings();
+
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        LaravelCart::observe(CartObserver::class);
-        CartItem::observe(CartItemObserver::class);
+        //LaravelCart::observe(CartObserver::class);
+        //CartItem::observe(CartItemObserver::class);
     }
 
     /**
@@ -57,10 +48,7 @@ class CartServiceProvider extends ServiceProvider
             'cart'
         );
 
-        // Register the service the package provides.
-        $this->app->singleton('cart', function () {
-            return new Cart;
-        });
+        $this->app->register(CartEventServiceProvider::class);
     }
 
     /**
@@ -79,6 +67,18 @@ class CartServiceProvider extends ServiceProvider
             __DIR__ . '/../config/cart.php' => $this->app->configPath() . '/cart.php',
             __DIR__ . '/../database/migrations/2021_11_09_111109_create_carts_table.php.stub' => $this->getMigrationFileName('create_carts_table.php'),
         ], 'laravel-cart');
+    }
+
+    protected function registerModelBindings()
+    {
+        $config = $this->app->config['cart.models'];
+
+        if (! $config) {
+            return;
+        }
+
+        $this->app->bind(CartContract::class, $config['cart']);
+        $this->app->bind(CartItemContract::class, $config['cart-item']);
     }
 
     /**

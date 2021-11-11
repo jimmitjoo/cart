@@ -4,14 +4,16 @@
 namespace Jimmitjoo\Cart\Actions;
 
 
-use Jimmitjoo\Cart\Models\CartItem;
+use Jimmitjoo\Cart\Contracts\CartItemContract;
 use Jimmitjoo\Cart\DataTransferObjects\CartItemData;
 
 class UpdateCartItemAction
 {
-    public function execute(CartItemData $cartItemData): CartItem
+    public function execute(CartItemData $cartItemData): CartItemContract
     {
-        $cartItem = CartItem::find($cartItemData->id);
+        $cartItemClass = config('cart.models.cart-item');
+
+        $cartItem = $cartItemClass::find($cartItemData->id);
         $cartItem->amount = ($cartItemData->amount) ?: $cartItem->amount;
         $cartItem->title = ($cartItemData->title) ?: $cartItem->title;
         $cartItem->price = ($cartItemData->price) ?: $cartItem->price;

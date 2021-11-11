@@ -6,10 +6,11 @@ namespace Jimmitjoo\Cart\Models;
 use Jimmitjoo\Cart\Traits\UsesUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Jimmitjoo\Cart\Contracts\CartItemContract;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class CartItem extends Model
+class CartItem extends Model implements CartItemContract
 {
     use UsesUuids, SoftDeletes;
 
