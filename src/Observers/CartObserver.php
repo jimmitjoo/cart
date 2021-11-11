@@ -18,6 +18,10 @@ class CartObserver
         if (empty($cart->{$cart->getKeyName()})) {
             $cart->{$cart->getKeyName()} = Str::uuid()->toString();
         }
+
+        if (is_null($cart->user_id) && auth()->check()) {
+            $cart->user_id = auth()->id();
+        }
     }
 
     /**
