@@ -41,11 +41,11 @@ $cartData = new CartData((int) $userId);
 $cart = (new CreateCartAction)->execute($cartData);
 ```
 
-You can add some other things to a cart as well. For example a status and a note. Typehints just to clarify what type is
+You can add a note to a cart as well. For example a note can tell you from where the Cart was created or something other important. Typehints just to clarify what type is
 expected by the CartData object.
 
 ```php
-$cartData = new CartData((int) $userId, (int) $status, (string) $note);
+$cartData = new CartData((int) $userId, (string) $note);
 
 $cart = (new CreateCartAction)->execute($cartData);
 ```
