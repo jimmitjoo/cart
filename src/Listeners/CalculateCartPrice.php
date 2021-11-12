@@ -16,8 +16,8 @@ class CalculateCartPrice
      */
     public function handle(CartItemAdded|CartItemUpdated|CartItemDeleted $event)
     {
-        $cartClass = config('cart.Models.cart');
-        $cartItemClass = config('cart.Models.cart-item');
+        $cartClass = config('cart.models.cart');
+        $cartItemClass = config('cart.models.cart-item');
 
         $cartItems = $cartItemClass::where('cart_uuid', $event->cartUuid)->get();
 

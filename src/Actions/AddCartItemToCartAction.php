@@ -12,7 +12,7 @@ class AddCartItemToCartAction
 {
     public function execute(CartItemData $cartItemData): CartItemContract
     {
-        $cartItemClass = config('cart.Models.cart-item');
+        $cartItemClass = config('cart.models.cart-item');
 
         return $cartItemClass::create([
             'cart_uuid' => $cartItemData->cartUuid,

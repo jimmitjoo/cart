@@ -37,7 +37,7 @@ class Cart extends Model implements CartContract
 
     public function cartItems(): HasMany
     {
-        return $this->hasMany(config('cart.Models.cart-item'), 'cart_uuid');
+        return $this->hasMany(config('cart.models.cart-item'), 'cart_uuid');
     }
 
     public function addToCart(Purchasable $purchasable, int $amount = 1, int $discount = 0): static
